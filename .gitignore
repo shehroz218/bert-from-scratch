@@ -2,3 +2,5 @@
 /cornell movie-dialogs corpus
 /datasets
 /tokenizer
+
+.DS_Store*
