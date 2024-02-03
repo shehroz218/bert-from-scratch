@@ -13,7 +13,7 @@ class BERTDataset(Dataset):
                  seq_len
                  ):
         self.tokenizer = tokenizer
-        self.seq_LEN = seq_len
+        self.seq_len = seq_len
         self.corpus_lines = len(data_pair)
         self.lines = data_pair
     
@@ -109,5 +109,5 @@ class BERTDataset(Dataset):
         return self.lines[index][0], self.lines[index][1]
 
     def get_random_line(self):
-        return self.lines[random.randrange(self.corpus_lines[1])]
+        return self.lines[random.randrange(self.corpus_lines)][1]
 
