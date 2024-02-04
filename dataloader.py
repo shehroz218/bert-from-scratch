@@ -3,6 +3,8 @@ import torch
 import random
 from torch.utils.data import Dataset, DataLoader
 import itertools
+from berttokenizer import tokenizer_trainer
+from transformers import BertTokenizer
 # import torch.nn.functional as F
 
 
@@ -110,4 +112,22 @@ class BERTDataset(Dataset):
 
     def get_random_line(self):
         return self.lines[random.randrange(self.corpus_lines)][1]
+
+
+    @classmethod
+    def load_data_and_get_tokenize(cls, data_pair_path, seq_len):
+        # load pairs from disk
+        data_pair = []
+        with open(data_pair_path, 'r') as f:
+            for line in f:
+                data_pair.append(line.strip().split('\t'))
+
+        try:
+            tokenizer = BertTokenizer.from_pretrained('./tokenizer/tokenizer-1-vocab.txt', local_files_only=True)
+        except:
+            tokenizer = tokenizer(data_pair)
+            tokenizer.train()
+            tokenizer = tokenizer.get_tokenizer()
+
+        return cls(data_pair, tokenizer, seq_len)
 
