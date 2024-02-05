@@ -130,4 +130,5 @@ class BERTDataset(Dataset):
             tokenizer = tokenizer.get_tokenizer()
 
         return cls(data_pair, tokenizer, seq_len)
+    
 
