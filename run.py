@@ -1,9 +1,12 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
+
 from argparse import Namespace
+
 from dataloader import BERTDataset
-from model import BERT, BERTLM, BERTTrainer
+from model import BERT, BERTLM 
+from trainer import BERTTrainer
 
 
 
@@ -28,7 +31,7 @@ args = Namespace(
     batch_size=128,
     early_stopping_criteria=5,
     learning_rate=0.001,
-    num_epochs=100,
+    num_epochs=2,
     seed=1337,
     # Runtime options omitted for space
 )
@@ -53,4 +56,6 @@ bert_model = BERT(
 
 bert_lm = BERTLM(bert_model, len(tokenizer.vocab))
 bert_trainer = BERTTrainer(bert_lm, train_loader, device='cpu')
-# epochs = 20
+
+for epoch in range(args.num_epochs):
+  bert_trainer.train(epoch)
